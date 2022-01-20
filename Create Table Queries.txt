@@ -1,0 +1,14 @@
+CREATE TABLE Lib_member (Name varchar(50), SSN varchar(10), Campus_add varchar(100), Res_add varchar(100), Phone varchar(10), Lib_card_no varchar(20), Lib_card_expire date, Is_prof varchar(1), Is_member_active varchar(1), PRIMARY KEY(SSN));
+
+CREATE TABLE Lib_staff (Staff_id varchar(10), SSN varchar(10), Type varchar(40), PRIMARY KEY(Staff_id), FOREIGN KEY f1 (SSN) REFERENCES Lib_member(SSN));
+
+CREATE TABLE Book_author (Author_id varchar(10), Author_name varchar(50), PRIMARY KEY (Author_id));
+
+CREATE TABLE Books (ISBN varchar(13), Title varchar(50), Author_id varchar(50), Sub_area varchar(50), Description varchar(500), Book_type Varchar(20), Is_lendable varchar(1), Language varchar(20), Binding varchar(20), Edition varchar(20), PRIMARY KEY (ISBN), FOREIGN KEY f2 (Author_id) REFERENCES Book_author(Author_id));
+
+CREATE TABLE Book_issue (Issue_id varchar(10), SSN varchar(10), Staff_id varchar(10), ISBN varchar(13), Issue_date date, Due_date date, Notice_date date, Is_returned varchar(1), PRIMARY KEY (Issue_id), FOREIGN KEY f3 (SSN) REFERENCES Lib_member(SSN), FOREIGN KEY f4 (Staff_id) REFERENCES Lib_staff(Staff_id), FOREIGN KEY f5 (ISBN) REFERENCES Books(ISBN));
+
+CREATE TABLE Book_available (ISBN varchar(13), Total_copies varchar(10), Available_copies varchar(10), FOREIGN KEY f6 (ISBN) REFERENCES Books(ISBN));
+
+CREATE TABLE Book_require (ISBN varchar(13), Total_book_required varchar(10), FOREIGN KEY f7 (ISBN) REFERENCES Books(ISBN));
+
